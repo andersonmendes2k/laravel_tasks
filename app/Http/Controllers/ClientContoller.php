@@ -25,7 +25,7 @@ class ClientContoller extends Controller
      */
     public function create()
     {
-        //
+        return view('clients.create');
     }
 
     /**
@@ -36,7 +36,7 @@ class ClientContoller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo "works";
     }
 
     /**
@@ -60,7 +60,9 @@ class ClientContoller extends Controller
      */
     public function edit($id)
     {
-        //
+        $client = \App\Client::find($id);
+
+        return view('clients.edit', compact('client'));
     }
 
     /**

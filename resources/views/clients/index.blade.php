@@ -14,7 +14,7 @@
 					<th>Id</th>
 					<th>Nome</th>
 					<th>Email</th>
-					<th>Idade</th>
+					<th>Ação</th>
 					</tr>
 			</thead>
 			<tbody>
@@ -23,7 +23,9 @@
 					<td>{{$client->id }}</td>
 					<td><a href="{{ route('clients.show', $client->id )}}">{{$client->name }}</td>
 					<td>{{$client->email }}</td>
-					<td>{{$client->age }}</td>
+					<td>
+						<a href="{{ route('clients.edit', $client->id )}}">Editar</a>
+					</td>
 				</tr>
 				@empty
 				<tr>
@@ -32,6 +34,8 @@
 				@endforelse
 			</tbody>
 		</table>
+		 <a href="{{ route('clients.create')}}" class='btn btn-primary'>Criar</a>
+
 	</div>
 </div>
 @endsection

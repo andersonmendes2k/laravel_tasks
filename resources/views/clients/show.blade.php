@@ -12,8 +12,8 @@
 		<p>Nome do Cliente: {{ $client->name }}</p>
 		<p>Email do Cliente: {{ $client->email }}</p>
 		<p>Idade do Cliente: {{ $client->age }}</p>
-
-		<a href="{{ route('clients.index')}}">Voltar</a>
+		<p>Data do cadastro: {{ $client->created_at }}</p>
+		<a href="{{ route('clients.index')}}"> Voltar</a>
 	</div>
 </div>
 @endsection
