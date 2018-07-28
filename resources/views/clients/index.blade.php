@@ -20,6 +20,7 @@
 			<tbody>
 				@forelse ($clients as $client)
 				<tr>
+
 					<td style="font-size: 14px; font-weight: bold;">{{$client->id }}</td>
 					<td style="font-size: 14px; font-weight: bold;"><a href="{{ route('clients.show', $client->id )}}">{{$client->name }}</td>
 					<td style="font-size: 14px; font-weight: bold;">{{$client->email }}</td>
@@ -31,6 +32,7 @@
 
 							<button class="btn btn-danger" type="submit"
 							onclick="return confirm('Deseja remover o cliente {{$client->name}} ?')">Remover</button>
+
 						</form>
 					</td>
 				</tr>
