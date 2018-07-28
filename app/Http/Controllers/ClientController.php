@@ -40,7 +40,7 @@ class ClientController extends Controller
         
         $request->validate([
                 'name'=>['required', 'max:100', 'min:3'],
-                'email' => ['required', 'max:75', 'min:7'],
+                'email' => ['required', 'email', 'unique:clients'],
                 'age' => ['required', 'max:3', 'min:1']
         ]);
 
