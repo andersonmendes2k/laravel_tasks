@@ -2,10 +2,12 @@
 
 
 Route::get('/', function () {
-    return view('home');
+    //return view('home');
+    return redirect()->route('clients.index');
 });
 
-Route::resource('clients', 'ClientContoller');
+Route::resource('clients', 'ClientController');
+
 
 Auth::routes();
 

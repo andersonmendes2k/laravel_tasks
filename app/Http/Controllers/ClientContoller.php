@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Client;
 
-class ClientContoller extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class ClientContoller extends Controller
      */
     public function index()
     {
-        $clients = \App\Client::get();
+        $clients = Client::get();
 
         return view('clients.index', compact('clients'));
     }
@@ -36,8 +37,20 @@ class ClientContoller extends Controller
      */
     public function store(Request $request)
     {
-        echo "works";
-    }
+        
+        $client = new Client;
+
+        $client->name= $request->input('name');
+        $client->email=$request->input('email');
+        $client->age=$request->input('age');
+
+        $client->save();
+
+        return redirect()->route('clients.index');
+
+        #return view('clients.newcad');
+
+        }
 
     /**
      * Display the specified resource.
@@ -47,7 +60,7 @@ class ClientContoller extends Controller
      */
     public function show($id)
     {
-        $client = \App\Client::find($id);
+        $client = Client::findOrFail($id);
 
         return view('clients.show', compact('client'));
     }
@@ -60,7 +73,7 @@ class ClientContoller extends Controller
      */
     public function edit($id)
     {
-        $client = \App\Client::find($id);
+        $client = Client::findOrFail($id);
 
         return view('clients.edit', compact('client'));
     }
@@ -74,7 +87,15 @@ class ClientContoller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::findOrFail($id);
+
+        $client->name= $request->input('name');
+        $client->email=$request->input('email');
+        $client->age=$request->input('age');
+
+        $client->save();
+
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -85,6 +106,10 @@ class ClientContoller extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client= Client::findOrFail($id);
+
+        if($client->delete()) {
+            return redirect()->route('clients.index');
+         }
     }
 }
