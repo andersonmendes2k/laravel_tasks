@@ -21,7 +21,7 @@
 				@forelse ($clients as $client)
 				<tr>
 
-					<td style="font-size: 14px; font-weight: bold;">{{$client->id }}</td>
+					<td style="font-size: 14px; font-weight: bold;">{{$client->id }} </td>
 					<td style="font-size: 14px; font-weight: bold;"><a href="{{ route('clients.show', $client->id )}}">{{$client->name }}</td>
 					<td style="font-size: 14px; font-weight: bold;">{{$client->email }}</td>
 					<td>
@@ -29,13 +29,30 @@
 						<form style="display: inline;" action="{{ route('clients.destroy', $client->id ) }}" method="post">
 							{{ csrf_field() }}
 							{{ method_field('DELETE') }}
-
-							<button class="btn btn-danger" type="submit"
-							onclick="return confirm('Deseja remover o cliente {{$client->name}} ?')">Remover</button>
-
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Remover</button>
+							<!-- Modal -->
+							<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Remover {{ $client->name }} ?</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							        Deseja realmente remover este cliente?</div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+							        <button type="submit" class="btn btn-danger">Confirmar</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
 						</form>
 					</td>
 				</tr>
+
 				@empty
 				<tr>
 					<td>Nenhum cadastro</td>

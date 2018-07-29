@@ -10,5 +10,5 @@
 		    <label for="exampleInputAge1">Idade</label>
 		    <input type="number" class="form-control" name="age" id="ageinput" placeholder="Idade" value="{{ @$client->age }}">
 		  </div>
-		  <button type="submit" class="btn btn-dark" style="margin-top: 25px; margin-right: 10px">Salvar</button>
-		  <a href="{{ route('clients.index')}}" class='btn btn-danger' style="margin-top: 25px; margin-right: 10px">Cancelar</a>
+		  <button type="submit" class="btn btn-dark" style="margin-top: 20px; margin-right: 10px">Salvar</button>
+		  <a href="{{ route('clients.index')}}" class='btn btn-danger' style="margin-top: 20px; margin-right: 10px">Cancelar</a>
