@@ -24,11 +24,13 @@
 					<td style="font-size: 14px; font-weight: bold;"><a href="{{ route('clients.show', $client->id )}}">{{$client->name }}</td>
 					<td style="font-size: 14px; font-weight: bold;">{{$client->email }}</td>
 					<td>
+						@can('update-client', $client)
 						<a class="btn btn-primary"href="{{ route('clients.edit', $client->id )}}">Editar</a>
 						<form style="display: inline;" action="{{ route('clients.destroy', $client->id ) }}" method="post">
 							{{ csrf_field() }}
 							{{ method_field('DELETE') }}
 							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Remover</button>
+							@endcan
 							<!-- Modal -->
 							<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">

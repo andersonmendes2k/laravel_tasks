@@ -19,6 +19,9 @@ class CreateClientsTable extends Migration
             $table->string('name', 60);
             $table->string('email', 40);
             $table->integer('age');
+            $table->integer('user_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

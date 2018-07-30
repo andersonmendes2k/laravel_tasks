@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
 use App\Client;
+use Gate;
 
 class ClientController extends Controller
 {
@@ -41,6 +42,8 @@ class ClientController extends Controller
     {
 
         $client = new Client;
+
+
 
         $client->name= $request->input('name');
         $client->email=$request->input('email');
@@ -79,6 +82,8 @@ class ClientController extends Controller
     {
         $client = Client::findOrFail($id);
 
+        $this->authorize('update-client', $client);
+
         return view('clients.edit', compact('client'));
     }
 
@@ -100,6 +105,8 @@ class ClientController extends Controller
 
         $client = Client::findOrFail($id);
 
+        $this->authorize('update-client', $client);
+
         $client->name= $request->input('name');
         $client->email=$request->input('email');
         $client->age=$request->input('age');
@@ -119,6 +126,8 @@ class ClientController extends Controller
     public function destroy(Request $request, $id)
     {
         $client= Client::findOrFail($id);
+
+        $this->authorize('update-client', $client);
 
         if($client->delete()) {
             $request->session()->flash("success", "Cliente ". $client->name ." deletado com sucesso");

@@ -2,10 +2,10 @@
 
 
 
-Route::group(['middleware'=>['alerttasks']], function(){
+Route::group(['middleware'=>['alerttasks','auth']], function(){
 
 Route::get('/', function () {
-    return redirect()->route('clients.index');
+    return view('home');
 });
 
 Route::get('tasks/add/{id}', 'toDoTasks@store');
