@@ -46,7 +46,9 @@ class ClientController extends Controller
         $client->email=$request->input('email');
         $client->age=$request->input('age');
 
-        $client->save();
+        if ($client->save()) {
+            $request->session()->flash("success", "Cliente ". $client->name ." cadastrado com sucesso");
+        }
 
         return redirect()->route('clients.index');
 
@@ -102,8 +104,9 @@ class ClientController extends Controller
         $client->email=$request->input('email');
         $client->age=$request->input('age');
 
-        $client->save();
-
+        if ($client->save()) {
+            $request->session()->flash("success", "Cliente ". $client->name ." editado com sucesso");
+        }
         return redirect()->route('clients.index');
     }
 
@@ -113,12 +116,15 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $client= Client::findOrFail($id);
 
         if($client->delete()) {
+            $request->session()->flash("success", "Cliente ". $client->name ." deletado com sucesso");
             return redirect()->route('clients.index');
          }
+
+        
     }
 }
