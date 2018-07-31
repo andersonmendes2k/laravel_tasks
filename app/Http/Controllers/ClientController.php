@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
 use App\Client;
+use app\User;
+use Validator;
 use Gate;
+use Auth;
 
 class ClientController extends Controller
 {
@@ -43,11 +45,12 @@ class ClientController extends Controller
 
         $client = new Client;
 
-
+        $oUser = Auth::id();
 
         $client->name= $request->input('name');
         $client->email=$request->input('email');
         $client->age=$request->input('age');
+        $client->user_id=$oUser;
 
         if ($client->save()) {
             $request->session()->flash("success", "Cliente ". $client->name ." cadastrado com sucesso");
