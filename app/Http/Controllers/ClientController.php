@@ -72,6 +72,13 @@ class ClientController extends Controller
         return view('clients.show', compact('client'));
     }
 
+    public function prevPDF()
+    {
+        $clients = Client::get();
+
+        return view('clients.list_pdf', compact('clients'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

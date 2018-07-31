@@ -62,7 +62,8 @@
 			</tbody>
 		</table>
 		 <a href="{{ route('clients.create')}}" class='btn btn-secondary'>Criar</a>
-
+		 <a href="{{ url('clients/prev')}}" class='btn btn-info'>Ver PDF</a>
+		 <a href="{{ url('clients/pdf')}}" class='btn btn-info'>Baixar PDF</a>
 	</div>
 </div>
 @endsection

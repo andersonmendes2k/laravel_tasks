@@ -1,7 +1,6 @@
 <?php
 
 
-
 Route::group(['middleware'=>['alerttasks','auth']], function(){
 
 Route::get('/', function () {
@@ -12,13 +11,13 @@ Route::get('tasks/add/{id}', 'toDoTasks@store');
 
 Route::get('tasks/delete/{id}', 'toDoTasks@destroy')->middleware('checktasks');
 
+Route::get('clients/pdf','ExtraActions\ClientPdf');
+
+Route::get('clients/prev', 'ClientController@prevPDF');
 
 Route::resource('clients', 'ClientController');
 
 });
-
-
-
 
 Auth::routes();
 
