@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Gate;
 use Validator;
+use App\Client;
+use App\Services\Treinaweb;
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
-use App\Client;
-use Gate;
+use Illuminate\Contracts\Validation\Factory;
 
 class ClientController extends Controller
 {
@@ -15,8 +17,10 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        var_dump(session('todotasks'));
+
         $clients = Client::get();
 
         return view('clients.index', compact('clients'));
@@ -27,7 +31,7 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('clients.create');
     }
@@ -35,29 +39,29 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ClientRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(ClientRequest $request)
     {
-
         $client = new Client;
 
+        if ($request->hasFile('photo')) {
+            $client->photo = $request->photo->store('public');
+        }
 
-
-        $client->name= $request->input('name');
-        $client->email=$request->input('email');
-        $client->age=$request->input('age');
-
+        $client->name = $request->input("name");
+        $client->email = $request->input("email");
+        $client->age = $request->input("age");
+        
         if ($client->save()) {
-            $request->session()->flash("success", "Cliente ". $client->name ." cadastrado com sucesso");
+            $request->session()->flash('success', 'Cliente cadastrado com sucesso!');
+        } else {
+            $request->session()->flash('error', 'Erro ao cadastrar cliente');
         }
-
+        
         return redirect()->route('clients.index');
-
-        #return view('clients.newcad');
-
-        }
+    }
 
     /**
      * Display the specified resource.
@@ -94,26 +98,33 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Factory $validator, Request $request, $id)
     {
-
-        Validator::make($request->all(), [
-            'name'=>['required', 'max:100', 'min:3'],
-            'email' => ['required', 'email'],
-            'age' => ['required', 'max:3', 'min:1']
+        $validator->make($request->all(), [
+            'name' => ['required', 'max:100', 'min:3'],
+            'email' => ['required', 'email', 'unique:clients'],
+            'age' => ['required', 'integer'],
+            'photo' => ['mimes:jpeg,bmp,png']
         ])->validate();
 
         $client = Client::findOrFail($id);
 
         $this->authorize('update-client', $client);
 
-        $client->name= $request->input('name');
-        $client->email=$request->input('email');
-        $client->age=$request->input('age');
+        if ($request->hasFile('photo')) {
+            $client->photo = $request->photo->store('public');
+        }
+
+        $client->name = $request->input("name");
+        $client->email = $request->input("email");
+        $client->age = $request->input("age");
 
         if ($client->save()) {
-            $request->session()->flash("success", "Cliente ". $client->name ." editado com sucesso");
+            $request->session()->flash('success', 'Cliente atualizado com sucesso!');
+        } else {
+            $request->session()->flash('error', 'Erro ao atualizar cliente');
         }
+        
         return redirect()->route('clients.index');
     }
 
@@ -123,17 +134,18 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id, Request $request)
     {
-        $client= Client::findOrFail($id);
+        $client = Client::findOrfail($id);
 
         $this->authorize('update-client', $client);
 
-        if($client->delete()) {
-            $request->session()->flash("success", "Cliente ". $client->name ." deletado com sucesso");
-            return redirect()->route('clients.index');
-         }
+        if ($client->delete()) {
+            $request->session()->flash('success', 'Cliente deletado com sucesso!');
+        } else {
+            $request->session()->flash('error', 'Erro ao deletar cliente');
+        }
 
-        
+        return redirect()->route('clients.index');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AlertTasks
+class HasAlert
 {
     /**
      * Handle an incoming request.
@@ -19,12 +19,11 @@ class AlertTasks
 
         $ids = $request->session()->get('todotasks', []);
 
-        if ($ids){
-            $request->session()->flash('alert','voce tem '.count($ids).' tarefa(s) pendente(s)');
-        }else {
-            $request->session()->flash('alert','voce não tem tarefas pendentes');
-        }
+        if ($ids) {
+            $tasks = count($ids);
 
+            $request->session()->flash('alert', "Você tem {$tasks} tarefas pendentes");
+        } 
 
         return $response;
     }

@@ -25,7 +25,7 @@ class Dash implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !strpos($value, '-');
+        return ! strpos($value, '-');
     }
 
     /**

@@ -24,51 +24,64 @@ class ClientRequest extends FormRequest
      */
     public function rules()
     {
-
-        //$this->sanitize();
+        $this->sanitize();
 
         return [
-            'name'=>['required', 'max:100', 'min:3', 'dash2'],
+            'name'  => ['required', 'max:100', 'min:3', 'dash2:par1,par2,par3'],
             'email' => ['required', 'email', 'unique:clients'],
-            'age' => ['required', 'max:3', 'min:1']
+            'age'   => ['required', 'integer'],
+            'photo' => ['required', 'mimes:jpeg,bmp,png']
         ];
     }
 
-    public function sanitize(){
-
+    /**
+     * Limpa os dados da request
+     *
+     * @return void
+     */
+    public function sanitize() 
+    {
         $data = $this->all();
 
         $data['name'] = str_replace('-', ' ', $data['name']);
 
         $this->replace($data);
-
     }
 
-    /*
+    /**
+     * Pega a instancia do validator
+     *
+     * @param [type] $validator
+     * @return void
+     */
+    // public function withValidator($validator) 
+    // {
+    //     $validator->after(function($validator) {
+    //         if ($this->hasDash()) {
+    //             $validator->errors()->add('name', 'O campo nome não pode ter -');
+    //         }
+    //     });
+    // }
 
-    old method
-
-    public function withValidator($validator)
+    /**
+     * Verifica se tem -
+     *
+     * @return boolean
+     */
+    public function hasDash() 
     {
-        $validator->after(function($validator){
-            if ($this->hasDash()) {
-                $validator->errors()->add('name','O campo não deve conter -');
-            }
-        });
-    }
-
-    public function hasDash(){
-
         return strpos($this->name, '-');
     }
-    */
 
-    public function messages()
+    /**
+     * define descrições manuais das regras de validação
+     *
+     * @return void
+     */
+    public function messages() 
     {
-        return[
-            'name.required' => 'Preencha o nome do cliente.',
-            'email.required' => 'Preencha o email do cliente.',
-            'age.required' => 'Preencha a idade do cliente.'
+        return [
+            'name.required' => "O campo nome do cliente deve ser preenchido"
         ];
     }
 }
