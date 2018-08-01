@@ -17,6 +17,8 @@ Route::get('clients/prev', 'ClientController@prevPDF');
 
 Route::resource('clients', 'ClientController');
 
+Route::resource('projects', 'ProjectController');
+
 });
 
 Auth::routes();
