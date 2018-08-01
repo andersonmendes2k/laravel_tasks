@@ -43,22 +43,18 @@ class ClientController extends Controller
     public function store(ClientRequest $request)
     {
 
-        $client = new Client;
+        $data = $request->all();
 
-        $oUser = Auth::id();
+        $data['name'] = $request->input('name');
+        $data['email'] = $request->input('email');
+        $data['age'] = $request->input('age');
+        $data['user_id'] = Auth::id();;
 
-        $client->name= $request->input('name');
-        $client->email=$request->input('email');
-        $client->age=$request->input('age');
-        $client->user_id=$oUser;
-
-        if ($client->save()) {
-            $request->session()->flash("success", "Cliente ". $client->name ." cadastrado com sucesso");
+        if (Client::create($data)) {
+            $request->session()->flash("success", "Cliente ". $data['name'] ." cadastrado com sucesso");
         }
 
         return redirect()->route('clients.index');
-
-        #return view('clients.newcad');
 
         }
 
@@ -112,11 +108,9 @@ class ClientController extends Controller
 
         $this->authorize('update-client', $client);
 
-        $client->name= $request->input('name');
-        $client->email=$request->input('email');
-        $client->age=$request->input('age');
+        $data = $request->all();
 
-        if ($client->save()) {
+        if ($client->update($data)) {
             $request->session()->flash("success", "Cliente ". $client->name ." editado com sucesso");
         }
         return redirect()->route('clients.index');
