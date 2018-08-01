@@ -65,13 +65,11 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Client $client
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Client $client)
     {
-        $client = Client::findOrFail($id);
-
         return view('clients.show', compact('client'));
     }
 
@@ -85,12 +83,11 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Client $client
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Client $client)
     {
-        $client = Client::findOrFail($id);
 
         $this->authorize('update-client', $client);
 
@@ -101,10 +98,10 @@ class ClientController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Client $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $client)
     {
 
         Validator::make($request->all(), [
@@ -112,8 +109,6 @@ class ClientController extends Controller
             'email' => ['required', 'email'],
             'age' => ['required', 'max:3', 'min:1']
         ])->validate();
-
-        $client = Client::findOrFail($id);
 
         $this->authorize('update-client', $client);
 
@@ -133,9 +128,8 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Client $client)
     {
-        $client= Client::findOrFail($id);
 
         $this->authorize('update-client', $client);
 
