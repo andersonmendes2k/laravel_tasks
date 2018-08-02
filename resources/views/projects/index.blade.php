@@ -11,6 +11,7 @@
 			<thead>
 				<tr>
 					<th>Nome</th>
+					<th>Autor</th>
 					<th>Descrição</th>
 					<th>Custo</th>
 					<th>Ação</th>
@@ -20,6 +21,11 @@
 				@forelse ($projects as $project)
 				<tr>
 					<td style="font-size: 14px; font-weight: bold;"><a href="{{ route('projects.show', $project->id )}}">{{$project->name }}</td>
+
+						
+						<td>{{ $project->client }} broke</td>
+
+
 					<td style="font-size: 14px; font-weight: bold;">{{$project->description }} </td>
 					<td style="font-size: 14px; font-weight: bold;">{{$project->cust }}</td>
 					<td>

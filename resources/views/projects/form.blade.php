@@ -11,6 +11,12 @@
 		    </div>
 		</div>
 		<div class="form-group">
+		    <label for="cost" class="col-sm-2 control-label">client_id</label>
+		    <div class="col-sm-10">
+		    <input type="text" class="form-control" id="client_id" name="client_id" placeholder="client_id" value="{{ @$project->client_id }}">
+		    </div>
+		</div>
+		<div class="form-group">
 		    <label for="description" class="col-sm-2 control-label">Descrição</label>
 		    <div class="col-sm-10">
 		        <textarea class="form-control" id="description" name="description" placeholder="Descrição">{{ @$project->description }}</textarea>
